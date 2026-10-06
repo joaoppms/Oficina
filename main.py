@@ -8,20 +8,19 @@ from pybricks.robotics import DriveBase
 ev3 = EV3Brick()
 
 # Ajuste as portas dos motores conforme a sua montagem
-left_motor = Motor(Port.A)
-right_motor = Motor(Port.B)
+motorEsquerdo = Motor(Port.A)
+motoDireito = Motor(Port.B)
 
 # Ajuste as portas dos sensores de cor
-left_sensor = ColorSensor(Port.S1)
-right_sensor = ColorSensor(Port.S2)
+sensor_esquerdo = ColorSensor(Port.S1)
+sensor_direito = ColorSensor(Port.S2)
 
 # Configuração da base motora (DriveBase)
-# Diâmetro da roda em mm e distância entre as rodas (track) em mm
-robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=114)
+robot = DriveBase(motorEsquerdo, motorDireito)
 
 # Definindo velocidades de navegação
-SPEED = 100        # Velocidade em frente (mm/s)
-TURN_SPEED = 60    # Velocidade de rotação nas curvas (deg/s)
+VELOCIDADE = 100        # Velocidade em frente (mm/s)
+VELOCIDADE_CURVA = 60    # Velocidade de rotação nas curvas (deg/s)
 
 # Sinal sonoro indicando que o programa iniciou
 ev3.speaker.beep()
@@ -29,27 +28,27 @@ ev3.speaker.beep()
 # 2. Loop Principal de Seguidor de Linha por Cores
 while True:
     # Leitura das cores identificadas pelos dois sensores
-    left_color = left_sensor.color()
-    right_color = right_sensor.color()
+    Cor_esquerdo = sensor_esquerdo.color()
+    Cor_direito = right_direito.color()
 
     # Se o sensor esquerdo viu a linha preta -> Corrigir virando para a esquerda
-    if left_color == Color.BLACK and right_color != Color.BLACK:
-        robot.drive(0, -TURN_SPEED)
+    if sCor_esquerdo == Color.BLACK and Cor_direito != Color.BLACK:
+        robot.drive(0, -VELOCIDADE_CURVA)
 
     # Se o sensor direito viu a linha preta -> Corrigir virando para a direita
-    elif right_color == Color.BLACK and left_color != Color.BLACK:
-        robot.drive(0, TURN_SPEED)
+    elif Cor_direito == Color.BLACK and Cor_esquerdo != Color.BLACK:
+        robot.drive(0, VELOCIDADE_CURVA)
 
     # Se ambos os sensores estão no branco -> Seguir em frente
-    elif left_color == Color.WHITE and right_color == Color.WHITE:
-        robot.drive(SPEED, 0)
+    elif Cor_esquerdo == Color.WHITE and Cor_direito == Color.WHITE:
+        robot.drive(VELOCIDADE, 0)
 
     # Se ambos os sensores detectarem preto (Cruzamento) -> Seguir em frente
-    elif left_color == Color.BLACK and right_color == Color.BLACK:
-        robot.drive(SPEED, 0)
+    elif Cor_esquerdo == Color.BLACK and Cor_direito == Color.BLACK:
+        robot.drive(VELOCIDADE, 0)
 
     # Caso estejam em outra superfície/cor genérica
     else:
-        robot.drive(SPEED, 0)
+        robot.drive(VELOCIDADE, 0)
 
 
