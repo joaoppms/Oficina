@@ -8,15 +8,15 @@ from pybricks.robotics import DriveBase
 ev3 = EV3Brick()
 
 # Ajuste as portas dos motores conforme a sua montagem
-motorEsquerdo = Motor(Port.A)
-motoDireito = Motor(Port.B)
+motorEsquerdo = Motor(Port.B)
+motorDireito = Motor(Port.C)
 
 # Ajuste as portas dos sensores de cor
 sensor_esquerdo = ColorSensor(Port.S1)
 sensor_direito = ColorSensor(Port.S2)
 
 # Configuração da base motora (DriveBase)
-robot = DriveBase(motorEsquerdo, motorDireito)
+robot = DriveBase(motorEsquerdo, motorDireito,wheel_diameter=56, axle_track=114)
 
 # Definindo velocidades de navegação
 VELOCIDADE = 100        # Velocidade em frente (mm/s)
@@ -29,10 +29,10 @@ ev3.speaker.beep()
 while True:
     # Leitura das cores identificadas pelos dois sensores
     Cor_esquerdo = sensor_esquerdo.color()
-    Cor_direito = right_direito.color()
+    Cor_direito = sensor_direito.color()
 
     # Se o sensor esquerdo viu a linha preta -> Corrigir virando para a esquerda
-    if sCor_esquerdo == Color.BLACK and Cor_direito != Color.BLACK:
+    if Cor_esquerdo == Color.BLACK and Cor_direito != Color.BLACK:
         robot.drive(0, -VELOCIDADE_CURVA)
 
     # Se o sensor direito viu a linha preta -> Corrigir virando para a direita
